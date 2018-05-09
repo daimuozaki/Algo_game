@@ -7,7 +7,7 @@
 
 #include "PlayGame.h"
 
-//プロトタイプ宣言、ゲーム面での関数群
+//プロトタイプ宣言
 void Initialize();
 void SettingGame();
 void ShowMenu();
