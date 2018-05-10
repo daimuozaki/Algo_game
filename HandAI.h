@@ -37,6 +37,7 @@ typedef struct {
 }Player;
 
 void GetRandomAIHand();
+void GetBaseAIHand();
 int JudgeColor(int);
 bool JudgeNum(int, int);
 int GetCardNum(int);

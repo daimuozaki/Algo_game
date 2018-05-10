@@ -116,8 +116,10 @@ int DrawCard() {
 		player[turnPlayer].cardNum++;
 		deckTop++;
 		if (player[turnPlayer].playerKind == HUMAN) {
-			if (JudgeColor(drawCard) == 0) printf("黒の%d番を引きました\n", drawCard / 2);
-			else printf("白の%d番を引きました\n", drawCard / 2);
+			if (JudgeColor(drawCard) == 0) 
+				printf("黒の%d番を引きました\n", drawCard / 2);
+			else 
+				printf("白の%d番を引きました\n", drawCard / 2);
 		}
 	}
 	else {
@@ -148,7 +150,8 @@ void SoatCard(int dc) {
 		}
 	}
 	for (i = 0; i < player[turnPlayer].cardNum; i++) {
-		if (dc == player[turnPlayer].card[i]) player[turnPlayer].getCard = i;
+		if (dc == player[turnPlayer].card[i])
+			player[turnPlayer].getCard = i;
 	}
 }
 /*アタック処理…の中継点
@@ -254,7 +257,8 @@ void GetHumanHand() {
 　カード数以上で判定してるけど同値でもよかったかも
  */
 void CheckGameSet() {
-	if (CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) gameSet = true;
+	if (CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum)
+		gameSet = true;
 }
 /*結果を確認して確定させる関数
 　負けたほうはすべての札が公開されている＝公開枚数が多いほうが負け
@@ -265,9 +269,12 @@ int CheckResult() {
 	for (i = 0; i < PLAYER_NUM; i++) {
 		clearNum[i] = CheckClear(i);
 	}
-	if (clearNum[0] < clearNum[1]) return PLAYER_1;
-	else if (clearNum[0] > clearNum[1])return PLAYER_2;
-	else return -1;
+	if (clearNum[0] < clearNum[1])
+		return PLAYER_1;
+	else if (clearNum[0] > clearNum[1])
+		return PLAYER_2;
+	else
+		return -1;
 }
 /*プレイヤー交代
 　プレイヤー1:0、プレイヤー2:1なので
@@ -285,32 +292,29 @@ void ShowBoard() {
 	char c;
 	for (i = 0; i < PLAYER_NUM; i++) {
 		for (j = 0; j < player[i].cardNum; j++) {
-			if (j >= 10) printf(" %d  ", j);
-			else printf("  %d  ", j);
+			if (j >= 10) 
+				printf(" %d  ", j);
+			else 
+				printf("  %d  ", j);
 		}
 		printf("\n");
 		for (j = 0; j < player[i].cardNum; j++) {
 			if ((player[i].clearCard[j] == COVERED) && (i != turnPlayer)) {
-				if (JudgeColor(player[i].card[j]) == BLACK) {
+				if (JudgeColor(player[i].card[j]) == BLACK) 
 					printf(" 黒　");
-				}
-				else if (JudgeColor(player[i].card[j]) == WHITE) {
+				else if (JudgeColor(player[i].card[j]) == WHITE) 
 					printf(" 白　");
-				}
 			}
 			else {
-				if (JudgeColor(player[i].card[j]) == BLACK) {
+				if (JudgeColor(player[i].card[j]) == BLACK)
 					printf("*");
-				}
-				else {
+				else
 					printf(" ");
-				}
-				if (player[i].card[j] >= 20) {
+
+				if (player[i].card[j] >= 20) 
 					printf("%d　", GetCardNum(player[i].card[j]));
-				}
-				else {
+				else
 					printf(" %d　", GetCardNum(player[i].card[j]));
-				}
 			}
 		}
 		printf("\n\n");
@@ -324,14 +328,17 @@ void ShowBoard() {
  */
 void WriteBoard() {
 	int i, j;
+	if (!gameSet)
+		fprintf(file, "プレイヤー%dのターンです\n", turnPlayer + 1);
 	for (i = 0; i < PLAYER_NUM; i++) {
+		fprintf(file, "プレイヤー%d:\n", i + 1);
 		for (j = 0; j < player[i].cardNum; j++) {
 			if (j >= 10) fprintf(file, " %d  ", j);
 			else fprintf(file, "  %d  ", j);
 		}
 		fprintf(file, "\n");
 		for (j = 0; j < player[i].cardNum; j++) {
-			if ((player[i].clearCard[j] == COVERED) && (i != turnPlayer)) {
+			if (player[i].clearCard[j] == COVERED) {
 				if (JudgeColor(player[i].card[j]) == BLACK) fprintf(file, " 黒  ");
 				else fprintf(file, " 白  ");
 			}

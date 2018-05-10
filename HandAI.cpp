@@ -7,13 +7,13 @@ int AgainstPlayer;
 
 /*ランダムAIに手を入力させる関数
 　指定カードこそランダムだが当てる数値はカードの前後の値を参照してそこから乱数
- 　もちろん非公開なら参照できないようにするつもり
-  */
+  もちろん非公開なら参照できないようにするつもり
+*/
 void GetRandomAIHand() {
 	int getNum = -1;
 	int ansNum = -1;
 	int minNum = 24;	//最大値の白11の内部値が23なので内部値が24以上のカードは存在しない
-	int maxNum = -1;	
+	int maxNum = -1;
 	int i;
 	bool legalSelect = false;
 	bool Hitting = false;
@@ -21,24 +21,28 @@ void GetRandomAIHand() {
 	do {
 		attackContinue = false;
 		do {
-			getNum = GetRandomNum(0, player[AgainstPlayer].cardNum);
-			if (player[AgainstPlayer].clearCard[getNum] == COVERED) legalSelect = true;
-			else legalSelect = false;
+			getNum = GetRandomNum(0, player[AgainstPlayer].cardNum - 1);
+			if (player[AgainstPlayer].clearCard[getNum] == COVERED)
+				legalSelect = true;
+			else
+				legalSelect = false;
 		} while (!legalSelect);
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
 		legalSelect = false;
-		for (i = getNum; i > -1;i--) {
+		for (i = getNum; i > -1; i--) {
 			if ((player[AgainstPlayer].clearCard[i] == CLEAR) && (minNum > player[AgainstPlayer].card[i]))
 				minNum = player[AgainstPlayer].card[i];
 		}
 		if (minNum == 24)
 			minNum = getNum;
+		printf("%d～", minNum);
 		for (i = getNum; i < player[AgainstPlayer].cardNum; i++) {
 			if ((player[AgainstPlayer].clearCard[i] == CLEAR) && (maxNum < player[AgainstPlayer].card[i]))
 				maxNum = player[AgainstPlayer].card[i];
 		}
 		if (maxNum == -1)
-			maxNum = 23 - getNum;
+			maxNum = 23 - (player[AgainstPlayer].cardNum - getNum);
+		printf("%d\n", maxNum);
 		do {
 			ansNum = GetRandomNum(minNum, maxNum);
 			ansNum = GetCardNum(ansNum);
@@ -50,12 +54,31 @@ void GetRandomAIHand() {
 		if (Hitting) {
 			printf("AIは%dを宣言し、正解しました\n", ansNum);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
-			if ((CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum)&&(GetRandomNum(0, 1))) attackContinue = true;
+			if ((CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
+				attackContinue = true;
 		}
 		else {
 			printf("AIは%dを宣言し、不正解でした\n", ansNum);
 			player[turnPlayer].clearCard[player[turnPlayer].getCard] = CLEAR;
 		}
+	} while (attackContinue);
+}
+/*実験に使うAIのベースとなるAIの関数。
+　ランダムAIをベースに2択以下になったカード、白黒の判別機能などを追加予定
+　あとここからoutsideCardも本格的に使っていきたいなぁ
+*/
+void GetBaseAIHand() {
+	int getNum = -1;
+	int ansNum = -1;
+	int minNum = 24;
+	int maxNum = -1;
+	int i;
+	bool legalSelect = false;
+	bool hitting = false;
+	bool attackContinue;
+	do {
+		attackContinue = false;
+		
 	} while (attackContinue);
 }
 /*数字当てで正解不正解を判定する関数
@@ -66,7 +89,8 @@ bool JudgeNum(int anum, int gnum) {
 	int cnum;
 	if (JudgeColor(player[AgainstPlayer].card[gnum]) == BLACK) cnum = anum * 2;	//黒の場合、内部的には必ず偶数の値をとるため2nとして計算できる(0:0,1:2,2:4...11:22)
 	else cnum = anum * 2 + 1;										//同様に、白の場合は2n+1として計算する(0:1,1:3,2:5...11:23)
-																	//計算後の値を用いて数値の一致不一致を判定する
+
+	//計算後の値を用いて数値の一致不一致を判定する
 	if (cnum == player[AgainstPlayer].card[gnum]) return true;
 	else return false;
 }
@@ -90,7 +114,8 @@ int CheckClear(int pl) {
 	int i;
 	int clearNum = 0;
 	for (i = 0; i < player[pl].cardNum; i++) {
-		if (player[pl].clearCard[i] == CLEAR) clearNum++;
+		if (player[pl].clearCard[i] == CLEAR)
+			clearNum++;
 	}
 	return clearNum;
 }
