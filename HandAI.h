@@ -12,6 +12,7 @@
 //プレイヤーの種類の定義
 #define HUMAN 1
 #define RAND_AI 2
+#define BASE_AI 3
 //プレイヤー総数、とりあえず2人で
 #define PLAYER_NUM 2
 //カード状況

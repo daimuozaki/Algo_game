@@ -7,6 +7,7 @@ void InitDeck();
 void InitGame();
 void MakeFile();
 int PlayGame();
+void GameMenu();
 void StartGame();
 void SoatCard(int);
 int DrawCard();

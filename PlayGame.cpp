@@ -154,6 +154,9 @@ void SoatCard(int dc) {
 			player[turnPlayer].getCard = i;
 	}
 }
+void PlayMenu() {
+
+}
 /*アタック処理…の中継点
 　プレイヤーとAIで処理が分かれるためこのような形になった
  */
@@ -165,6 +168,9 @@ void Attack() {
 	case RAND_AI:
 		GetRandomAIHand();
 		break;
+	case BASE_AI:
+		GetBaseAIHand();
+		break;
 	default:
 		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);
 		break;
@@ -172,8 +178,8 @@ void Attack() {
 }
 /*ターンプレイヤーが人間だった場合の処理
 　アタックしたいカード番号を指定し、数値を入力する
- 　正誤判定は別関数にぶん投げています
-  */
+　正誤判定は別関数にぶん投げています
+*/
 void GetHumanHand() {
 	int getNum = -1;
 	int ansNum = -1;
@@ -255,7 +261,7 @@ void GetHumanHand() {
 }
 /*ゲームが終わったかを確認するだけの関数
 　カード数以上で判定してるけど同値でもよかったかも
- */
+*/
 void CheckGameSet() {
 	if (CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum)
 		gameSet = true;
