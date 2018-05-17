@@ -76,10 +76,14 @@ int PlayGame() {
 	{
 		drawCard = DrawCard();
 		SoatCard(drawCard);
-		if (player[turnPlayer].playerKind == HUMAN)
-			ShowBoard();
 		WriteBoard();
-		Attack();
+		if (player[turnPlayer].playerKind == HUMAN) {
+			ShowBoard(NORMAL_MODE);
+			GameMenu();
+		}
+		else {
+			Attack();
+		}
 		CheckGameSet();
 		ChangePlayer();
 	}
@@ -116,7 +120,7 @@ int DrawCard() {
 		player[turnPlayer].cardNum++;
 		deckTop++;
 		if (player[turnPlayer].playerKind == HUMAN) {
-			if (JudgeColor(drawCard) == 0) 
+			if (JudgeColor(drawCard) == BLACK) 
 				printf("黒の%d番を引きました\n", drawCard / 2);
 			else 
 				printf("白の%d番を引きました\n", drawCard / 2);
@@ -154,8 +158,29 @@ void SoatCard(int dc) {
 			player[turnPlayer].getCard = i;
 	}
 }
-void PlayMenu() {
-
+void GameMenu() {
+	char userSelect[LEN];
+	bool legalSelect = false;
+	do {
+		printf("1).カードへのアタック\n");
+		printf("2).盤面の確認\n");
+		fgets(userSelect, sizeof(userSelect), stdin);
+		LnTrim(userSelect);
+		fflush(stdin);
+		switch (*userSelect) {
+		case '1':
+			legalSelect = true;
+			Attack();
+			break;
+		case '2':
+			ShowBoard(SHOW_MODE);
+			break;
+		default:
+			legalSelect = false;
+			printf("もう一度やり直してください\n");
+			break;
+		}
+	} while (!legalSelect);
 }
 /*アタック処理…の中継点
 　プレイヤーとAIで処理が分かれるためこのような形になった
@@ -229,10 +254,11 @@ void GetHumanHand() {
 			printf("正解です\n");
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
 			if (CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) {
-				printf("もう一度アタックしますか？\n");
-				printf("1),はい\n");
-				printf("2),いいえ\n");
 				do {
+					printf("もう一度アタックしますか？\n");
+					printf("1),はい\n");
+					printf("2),いいえ\n");
+					printf("3),盤面を確認する\n");
 					fgets(UserNum, sizeof(UserNum), stdin);
 					LnTrim(UserNum);
 					switch (*UserNum)
@@ -245,6 +271,9 @@ void GetHumanHand() {
 					case '2':
 						printf("アタックを行いません\n");
 						legalSelect = true;
+						break;
+					case '3':
+						ShowBoard(SHOW_MODE);
 						break;
 					default:
 						printf("もう一度やり直してください\n");
@@ -290,45 +319,6 @@ void ChangePlayer() {
 	AgainstPlayer = turnPlayer;
 	turnPlayer = 1 - turnPlayer;
 }
-/*盤面表示
-　説明することある？
- */
-void ShowBoard() {
-	int i, j;
-	char c;
-	for (i = 0; i < PLAYER_NUM; i++) {
-		for (j = 0; j < player[i].cardNum; j++) {
-			if (j >= 10) 
-				printf(" %d  ", j);
-			else 
-				printf("  %d  ", j);
-		}
-		printf("\n");
-		for (j = 0; j < player[i].cardNum; j++) {
-			if ((player[i].clearCard[j] == COVERED) && (i != turnPlayer)) {
-				if (JudgeColor(player[i].card[j]) == BLACK) 
-					printf(" 黒　");
-				else if (JudgeColor(player[i].card[j]) == WHITE) 
-					printf(" 白　");
-			}
-			else {
-				if (JudgeColor(player[i].card[j]) == BLACK)
-					printf("*");
-				else
-					printf(" ");
-
-				if (player[i].card[j] >= 20) 
-					printf("%d　", GetCardNum(player[i].card[j]));
-				else
-					printf(" %d　", GetCardNum(player[i].card[j]));
-			}
-		}
-		printf("\n\n");
-	}
-	printf("Enterキーを押してください...\n");
-	c = _fgetchar();
-	fflush(stdin);
-}
 /*ファイルへの書き込み
 　AIが参加している場合も考え別関数として記述
  */
@@ -357,5 +347,62 @@ void WriteBoard() {
 			}
 		}
 		fprintf(file, "\n\n");
+	}
+}
+/*盤面を表示する関数
+　仮引数のmodeを使うことで自分のカードをすべて公開して表示するモードと
+　カードを伏せられた状態で表示するモードの2種類の表示法が使える
+*/
+void ShowBoard(int mode) {
+	int i, j;
+	for (i = 0; i < PLAYER_NUM; i++) {
+		for (j = 0; j < player[i].cardNum; j++) {
+			if (j >= 10)
+				printf(" %d  ", j);
+			else
+				printf("  %d  ", j);
+		}
+		printf("\n");
+		for (j = 0; j < player[i].cardNum; j++) {
+			if (mode == NORMAL_MODE) {
+				if ((player[i].clearCard[j] == COVERED)) {
+					if (JudgeColor(player[i].card[j]) == BLACK)
+						printf(" 黒　");
+					else if (JudgeColor(player[i].card[j]) == WHITE)
+						printf(" 白　");
+				}
+				else {
+					if (JudgeColor(player[i].card[j]) == BLACK)
+						printf("*");
+					else
+						printf(" ");
+
+					if (player[i].card[j] >= 20)
+						printf("%d　", GetCardNum(player[i].card[j]));
+					else
+						printf(" %d　", GetCardNum(player[i].card[j]));
+				}
+			}
+			else if (mode == SHOW_MODE) {
+				if ((player[i].clearCard[j] == COVERED) && (i != turnPlayer)) {
+					if (JudgeColor(player[i].card[j]) == BLACK)
+						printf(" 黒　");
+					else if (JudgeColor(player[i].card[j]) == WHITE)
+						printf(" 白　");
+				}
+				else {
+					if (JudgeColor(player[i].card[j]) == BLACK)
+						printf("*");
+					else
+						printf(" ");
+
+					if (player[i].card[j] >= 20)
+						printf("%d　", GetCardNum(player[i].card[j]));
+					else
+						printf(" %d　", GetCardNum(player[i].card[j]));
+				}
+			}
+		}
+		printf("\n\n");
 	}
 }

@@ -26,6 +26,9 @@
 #define PLAYER_2 1
 //入力できる文字列長
 #define LEN 32
+//盤面表示時のモード
+#define NORMAL_MODE 0
+#define SHOW_MODE 1
 
 //プレイヤーのデータを格納する構造体
 typedef struct {

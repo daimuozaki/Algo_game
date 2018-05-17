@@ -16,7 +16,7 @@ void GetHumanHand();
 int CheckResult();
 void CheckGameSet();
 void ChangePlayer();
-void ShowBoard();
 void WriteBoard();
+void ShowBoard(int);
 
 #endif // !PLAY_GAME_H
