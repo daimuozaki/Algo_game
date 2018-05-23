@@ -11,7 +11,8 @@
 void Initialize();
 void SettingGame();
 void ShowMenu();
-void CheckNum();
+//void CheckNum();
 void ShowResult(int);
+void WriteFinalResult();
 
 #endif // ALGO_GAME_H

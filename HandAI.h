@@ -38,6 +38,8 @@ typedef struct {
 	int clearCard[MAX_CARD];	//オープンになったカードとそうでないカードの判定
 	int outsideCard[DECKCARD];	//AIで使用、すでに公開されている、持っているなどで推理候補外のカードをまとめる
 	int cardNum;		//現在のカードの総枚数
+	int WinNum;			//連戦時の勝利回数
+	int attacks[2];		//アタックの確認用配列、0がアタック総数で1が成功数
 }Player;
 
 void GetRandomAIHand();
