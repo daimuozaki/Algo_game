@@ -35,7 +35,7 @@ typedef struct {
 	int playerKind;
 	int card[MAX_CARD];	//カードは全部で24枚、プレイヤー間でのカードの移動はないため1人最大12枚
 	int getCard;		//このターンに引いたカード、アタック失敗時に公開する必要がある
-	int clearCard[MAX_CARD];	//オープンになったカードとそうでないカードの判定
+	char clearCard[MAX_CARD];	//オープンになったカードとそうでないカードの判定
 	int outsideCard[DECKCARD];	//AIで使用、すでに公開されている、持っているなどで推理候補外のカードをまとめる
 	int cardNum;		//現在のカードの総枚数
 	int WinNum;			//連戦時の勝利回数
