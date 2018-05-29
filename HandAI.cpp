@@ -75,6 +75,7 @@ void GetBaseAIHand() {
 	int ansNum = -1;
 	int *minNum = new int[cardNum];
 	int *maxNum = new int[cardNum];
+	int *rangeNum = new int[cardNum];
 	int i, j;
 	bool legalSelect = false;
 	bool hitting = false;
@@ -85,6 +86,7 @@ void GetBaseAIHand() {
 		for (i = 0; i < cardNum; i++) {	//範囲判定のリセット、連続アタック時に上下限の判定に影響が及ぶ可能性があるためここに配置
 			minNum[i] = 24;
 			maxNum[i] = -1;
+			rangeNum[i] = 0;
 		}
 		for (i = 0; i < player[turnPlayer].cardNum; i++)			//除外カードの設定、まずは手持ちカードを除外
 			player[turnPlayer].outsideCard[i] = player[turnPlayer].card[i];
@@ -125,7 +127,14 @@ void GetBaseAIHand() {
 				legalSelect = false;
 		} while (!legalSelect);
 		for (i = 0; i < cardNum; i++) {
-			if ((maxNum[i] - minNum[i] <= 1) && (player[AgainstPlayer].clearCard[i] == COVERED) && (maxNum[i] >= minNum[i]))
+			rangeNum[i] = maxNum[i] - minNum[i];
+			j = 0;
+			while (player[turnPlayer].outsideCard[j] != -1) {
+				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
+					rangeNum[i]--;
+				j++;
+			}
+			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0))
 				getNum = i;
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
@@ -135,16 +144,13 @@ void GetBaseAIHand() {
 			if ((ansNum >= 0) && (ansNum <= 23)) {
 				if (JudgeColor(ansNum) == JudgeColor(player[AgainstPlayer].card[getNum])) {
 					for (i = 0; i < DECKCARD; i++) {
-						if (player[turnPlayer].outsideCard[i] == -1) {
-							legalSelect = true;
-							break;
-						}
-						else if (ansNum == player[turnPlayer].outsideCard[i]) {
+						if (ansNum == player[turnPlayer].outsideCard[i]) {
 							legalSelect = false;
 							break;
 						}
-						else {
+						else if (player[turnPlayer].outsideCard[i] == -1) {
 							legalSelect = true;
+							break;
 						}
 					}
 				}
