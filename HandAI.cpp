@@ -134,7 +134,7 @@ void GetBaseAIHand() {
 					rangeNum[i]--;
 				j++;
 			}
-			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0))
+			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED))
 				getNum = i;
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);

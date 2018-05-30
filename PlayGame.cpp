@@ -44,12 +44,12 @@ void MakeFile() {
 	char date[64];
 	char fileName[100];
 	strftime(date, sizeof(date), "%Y%m%d-%H%M%S", localtime(&t));
-	sprintf(fileName, "%s.txt", date);
+	sprintf(fileName, "gameLog\\%s.txt", date);
 	printf("%s\n", fileName);
 	file = fopen(fileName, "a");
 	if (file == NULL) {
 		printf("ファイルの作成に失敗しました\n");
-		fopen("test.txt", "a");
+		fopen("gameLog\\test.txt", "a");
 	}
 }
 /*山札のシャッフル
@@ -300,6 +300,7 @@ void GetHumanHand() {
 　カード数以上で判定してるけど同値でもよかったかも
 */
 void CheckGameSet() {
+	printf("%d,%d\n", CheckClear(AgainstPlayer), player[AgainstPlayer].cardNum);
 	if (CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum)
 		gameSet = true;
 }

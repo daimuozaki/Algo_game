@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include<direct.h>
 
 //ƒJ[ƒh‚ÌÅ‘å–‡”
 #define DECKCARD 24
