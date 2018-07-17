@@ -1,8 +1,7 @@
-﻿  Algo_game.cpp
-c:\users\c0115090\documents\github\algo_game\algo_game.cpp(94): warning C4101: 'c': ローカル変数は 1 度も使われていません。
-  コードを生成中...
-  コンパイル中...
+﻿  stdafx.cpp
+  Algo_game.cpp
+c:\users\reijer\source\repos\algo_game\algo_game.cpp(94): warning C4101: 'c': ローカル変数は 1 度も使われていません。
+  HandAI.cpp
   PlayGame.cpp
   コードを生成中...
-  Algo_game.vcxproj -> C:\Users\c0115090\Documents\GitHub\Algo_game\Debug\Algo_game.exe
-  Algo_game.vcxproj -> C:\Users\c0115090\Documents\GitHub\Algo_game\Debug\Algo_game.pdb (Partial PDB)
+  Algo_game.vcxproj -> C:\Users\Reijer\source\repos\Algo_game\Debug\Algo_game.exe
