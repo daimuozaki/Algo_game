@@ -203,7 +203,7 @@ void Attack() {
 		GetBaseAIHand();
 		break;
 	default:
-		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);
+		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);	//これを吐いたら初期化が上手くいっていない事になる
 		break;
 	}
 }
