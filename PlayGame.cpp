@@ -202,6 +202,9 @@ void Attack() {
 	case BASE_AI:
 		GetBaseAIHand();
 		break;
+	case SIDE_AI:
+		GetSideAIHand();
+		break;
 	default:
 		printf("ƒvƒŒƒCƒ„[%d‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ\n", turnPlayer + 1);	//‚±‚ê‚ğ“f‚¢‚½‚ç‰Šú‰»‚ªãè‚­‚¢‚Á‚Ä‚¢‚È‚¢–‚É‚È‚é
 		break;
