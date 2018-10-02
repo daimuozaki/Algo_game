@@ -1,2 +1,7 @@
-﻿  HandAI.cpp
-  Algo_game.vcxproj -> C:\Users\Reijer\source\repos\Algo_game\Debug\Algo_game.exe
+﻿  stdafx.cpp
+  Algo_game.cpp
+d:\github\algo_game\algo_game.cpp(94): warning C4101: 'c': ローカル変数は 1 度も使われていません。
+  HandAI.cpp
+  PlayGame.cpp
+  コードを生成中...
+  Algo_game.vcxproj -> D:\GitHub\Algo_game\Debug\Algo_game.exe
