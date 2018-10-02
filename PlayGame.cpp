@@ -99,14 +99,14 @@ void StartGame() {
 	int i;
 	for (i = 0; i < 8; i++) {
 		if (i % 2 == 0) {
-			player[PLAYER_1].card[i / 2] = deck[deckTop];
-			player[PLAYER_1].outsideCard[i / 2] = deck[deckTop];
-			player[PLAYER_1].cardNum++;
+			player[0].card[i / 2] = deck[deckTop];
+			player[0].outsideCard[i / 2] = deck[deckTop];
+			player[0].cardNum++;
 		}
 		else {
-			player[PLAYER_2].card[i / 2] = deck[deckTop];
-			player[PLAYER_2].outsideCard[i / 2] = deck[deckTop];
-			player[PLAYER_2].cardNum++;
+			player[1].card[i / 2] = deck[deckTop];
+			player[1].outsideCard[i / 2] = deck[deckTop];
+			player[1].cardNum++;
 		}
 		deckTop++;
 	}

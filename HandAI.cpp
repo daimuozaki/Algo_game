@@ -172,6 +172,8 @@ void GetBaseAIHand() {
 	} while (attackContinue);
 	delete[] minNum;
 	delete[] maxNum;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	delete[] rangeNum;
 }
 /*端から攻めるブラフなしAIの関数
@@ -249,8 +251,10 @@ void GetSideAIHand() {
 					rangeNum[i]--;
 				j++;
 			}
-			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED))
+			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
 				getNum = i;
+				break;
+			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
 		legalSelect = false;
@@ -289,6 +293,10 @@ void GetSideAIHand() {
 	delete[] maxNum;
 	delete[] rangeNum;
 	delete[] selectNum;
+=======
+>>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
+=======
+>>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
 }
 /*数字当てで正解不正解を判定する関数
 　Algo_game.cppで言ってる通り黒0：0、白0：1...として処理しているため数値の修正を挟む必要があったためこうなった
