@@ -174,6 +174,7 @@ void GetBaseAIHand() {
 	delete[] maxNum;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	delete[] rangeNum;
 }
 /*’[‚©‚çU‚ß‚éƒuƒ‰ƒt‚È‚µAI‚ÌŠÖ”
@@ -293,6 +294,8 @@ void GetSideAIHand() {
 	delete[] maxNum;
 	delete[] rangeNum;
 	delete[] selectNum;
+=======
+>>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
 =======
 >>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
 =======
