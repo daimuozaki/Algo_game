@@ -19,7 +19,7 @@ void GetRandomAIHand() {
 	bool Hitting = false;
 	bool attackContinue;
 	do {
-		player[turnPlayer].attacks[0]++;
+		player[turnPlayer].attacks[ATTACK_NUM]++;
 		attackContinue = false;
 		do {
 			getNum = GetRandomNum(0, player[AgainstPlayer].cardNum - 1);
@@ -55,7 +55,7 @@ void GetRandomAIHand() {
 		if (Hitting) {
 			printf("AIは%dを宣言し、正解しました\n", ansNum);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
-			player[turnPlayer].attacks[1]++;
+			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			if ((CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
 				attackContinue = true;
 		}
@@ -82,7 +82,7 @@ void GetBaseAIHand() {
 	bool attackContinue;
 	do {
 		attackContinue = false;			//連続アタック判定のリセット
-		player[turnPlayer].attacks[0]++;
+		player[turnPlayer].attacks[ATTACK_NUM]++;
 		for (i = 0; i < cardNum; i++) {	//範囲判定のリセット、連続アタック時に上下限の判定に影響が及ぶ可能性があるためここに配置
 			minNum[i] = 24;
 			maxNum[i] = -1;
@@ -161,7 +161,7 @@ void GetBaseAIHand() {
 		if (hitting) {
 			printf("AIは%dを宣言し、正解しました\n", ansNum);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
-			player[turnPlayer].attacks[1]++;
+			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			//if ((CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
 			//	attackContinue = true;
 		}
@@ -172,43 +172,28 @@ void GetBaseAIHand() {
 	} while (attackContinue);
 	delete[] minNum;
 	delete[] maxNum;
-<<<<<<< HEAD
 	delete[] rangeNum;
 }
-/**/
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	delete[] rangeNum;
-}
+
 /*端から攻めるブラフなしAIの関数
  1回これ作り上げた後でこのソースが大爆発使いやがりました
  バックアップはしっかりとっておこう！
 */
->>>>>>> 89be081b96843b2142488e2719c53262b68c84df
 void GetSideAIHand() {
 	const int cardNum = player[AgainstPlayer].cardNum;
 	int getNum = -1;
 	int ansNum = -1;
-<<<<<<< HEAD
 	int *minNum = new int[cardNum];
 	int *maxNum = new int[cardNum];
 	int *rangeNum = new int[cardNum];
 	int *selectNum = new int[cardNum];
-=======
-	int *selectNum = new int[cardNum];
-	int *minNum = new int[cardNum];
-	int *maxNum = new int[cardNum];
-	int *rangeNum = new int[cardNum];
->>>>>>> 89be081b96843b2142488e2719c53262b68c84df
 	int i, j;
 	bool legalSelect = false;
 	bool hitting = false;
 	bool attackContinue;
 	do {
 		attackContinue = false;			//連続アタック判定のリセット
-		player[turnPlayer].attacks[0]++;
+		player[turnPlayer].attacks[ATTACK_NUM]++;
 		for (i = 0; i < cardNum; i++) {	//範囲判定のリセット、連続アタック時に上下限の判定に影響が及ぶ可能性があるためここに配置
 			minNum[i] = 24;
 			maxNum[i] = -1;
@@ -265,15 +250,10 @@ void GetSideAIHand() {
 					rangeNum[i]--;
 				j++;
 			}
-<<<<<<< HEAD
-			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED))
-				getNum = i;
-=======
 			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
 				getNum = i;
 				break;
 			}
->>>>>>> 89be081b96843b2142488e2719c53262b68c84df
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
 		legalSelect = false;
@@ -299,7 +279,7 @@ void GetSideAIHand() {
 		if (hitting) {
 			printf("AIは%dを宣言し、正解しました\n", ansNum);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
-			player[turnPlayer].attacks[1]++;
+			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			//if ((CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
 			//	attackContinue = true;
 		}
@@ -312,15 +292,16 @@ void GetSideAIHand() {
 	delete[] maxNum;
 	delete[] rangeNum;
 	delete[] selectNum;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
-=======
->>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
-=======
->>>>>>> 490a9b1f240e7d530f492acfe16b88e0de523d4a
->>>>>>> 89be081b96843b2142488e2719c53262b68c84df
+}
+/*
+*/
+void GetCenterAIHand() {
+
+}
+/*
+*/
+void GetBruffAIHand() {
+
 }
 /*数字当てで正解不正解を判定する関数
 　Algo_game.cppで言ってる通り黒0：0、白0：1...として処理しているため数値の修正を挟む必要があったためこうなった
