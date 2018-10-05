@@ -223,7 +223,7 @@ void GetHumanHand() {
 	bool Hitting = false;
 	bool attackContinue;
 	do {
-		player[turnPlayer].attacks[0]++;
+		player[turnPlayer].attacks[ATTACK_NUM]++;
 		attackContinue = false;
 		printf("アタックをしたいカードの番号を入力してください\n");
 		do {
@@ -263,7 +263,7 @@ void GetHumanHand() {
 		if (Hitting) {				//正解だった場合連続してアタックを行えるのでその処理を挟む必要あり
 			printf("正解です\n");
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
-			player[turnPlayer].attacks[1]++;
+			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			if (CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) {
 				do {
 					printf("もう一度アタックしますか？\n");

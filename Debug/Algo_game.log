@@ -1,4 +1,5 @@
 ﻿  stdafx.cpp
+<<<<<<< HEAD
   PlayGame.cpp
   HandAI.cpp
 c:\users\c0115090\documents\github\algo_game\handai.cpp(175): error C2059: 構文エラー: '<<'
@@ -7,6 +8,14 @@ c:\users\c0115090\documents\github\algo_game\handai.cpp(184): error C2059: 構�
 c:\users\c0115090\documents\github\algo_game\handai.cpp(184): error C2143: 構文エラー: ';' が '}' の前にありません。
 c:\users\c0115090\documents\github\algo_game\handai.cpp(190): error C2143: 構文エラー: ';' が '{' の前にありません。
 c:\users\c0115090\documents\github\algo_game\handai.cpp(190): error C2447: '{': 対応する関数ヘッダーがありません (旧形式の仮引数リスト?)
+=======
+>>>>>>> 6f206dbfeaa36d585250f367e3df7ad55ad10116
   Algo_game.cpp
-c:\users\c0115090\documents\github\algo_game\algo_game.cpp(94): warning C4101: 'c': ローカル変数は 1 度も使われていません。
+d:\github\algo_game\algo_game.cpp(94): warning C4101: 'c': ローカル変数は 1 度も使われていません。
+  HandAI.cpp
+  PlayGame.cpp
   コードを生成中...
+<<<<<<< HEAD
+=======
+  Algo_game.vcxproj -> D:\GitHub\Algo_game\Debug\Algo_game.exe
+>>>>>>> 6f206dbfeaa36d585250f367e3df7ad55ad10116

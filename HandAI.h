@@ -33,6 +33,9 @@
 //盤面表示時のモード
 #define NORMAL_MODE 0
 #define SHOW_MODE 1
+//attacksで用いる
+#define ATTACK_NUM 0
+#define SUCCESS_NUM 1
 
 //プレイヤーのデータを格納する構造体
 typedef struct {
@@ -41,6 +44,7 @@ typedef struct {
 	int getCard;		//このターンに引いたカード、アタック失敗時に公開する必要がある
 	char clearCard[MAX_CARD];	//オープンになったカードとそうでないカードの判定
 	int outsideCard[DECKCARD];	//AIで使用、すでに公開されている、持っているなどで推理候補外のカードをまとめる
+	int toldCard[MAX_CARD];		//相手が宣言したカードを放り込む
 	int cardNum;		//現在のカードの総枚数
 	int WinNum;			//連戦時の勝利回数
 	int attacks[2];		//アタックの確認用配列、0がアタック総数で1が成功数
@@ -49,6 +53,8 @@ typedef struct {
 void GetRandomAIHand();
 void GetBaseAIHand();
 void GetSideAIHand();
+void GetCenterAIHand();
+void GetBruffAIHand();
 int JudgeColor(int);
 bool JudgeNum(int, int);
 int GetCardNum(int);
