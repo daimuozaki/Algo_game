@@ -274,6 +274,7 @@ void GetSideAIHand() {
 				}
 			}
 		} while (!legalSelect);
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {

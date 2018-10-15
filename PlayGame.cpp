@@ -205,6 +205,7 @@ void Attack() {
 	case SIDE_AI:
 		GetSideAIHand();
 		break;
+
 	default:
 		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);	//これを吐いたら初期化が上手くいっていない事になる
 		break;
@@ -259,6 +260,13 @@ void GetHumanHand() {
 			}
 			else printf("もう一度やり直してください\n");
 		} while (!legalSelect);
+		if (JudgeColor(player[AgainstPlayer].card[getNum]) == BLACK) {
+			ansNum *= 2;
+		}
+		else {
+			ansNum = ansNum * 2 + 1;
+		}
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
 		legalSelect = false;
 		if (Hitting) {				//正解だった場合連続してアタックを行えるのでその処理を挟む必要あり
 			printf("正解です\n");
