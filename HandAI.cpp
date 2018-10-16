@@ -187,10 +187,12 @@ void GetSideAIHand() {
 	int *maxNum = new int[cardNum];
 	int *rangeNum = new int[cardNum];
 	int *selectNum = new int[cardNum];
+	int bruffNum = -1;
 	int i, j;
 	bool legalSelect = false;
 	bool hitting = false;
 	bool attackContinue;
+	bool bruffed = false;
 	do {
 		attackContinue = false;			//連続アタック判定のリセット
 		player[turnPlayer].attacks[ATTACK_NUM]++;
@@ -218,6 +220,10 @@ void GetSideAIHand() {
 			}
 		}
 		i = 0;
+		while (player[turnPlayer].toldCard[i] != -1) {
+			printf("%d\n", player[turnPlayer].toldCard[i]);
+			i++;
+		}
 		//while (true) {
 		//	if ((player[turnPlayer].outsideCard[i] == -1)||(i>DECKCARD))
 		//		break;
@@ -236,9 +242,11 @@ void GetSideAIHand() {
 				if (player[AgainstPlayer].clearCard[j] == CLEAR)maxNum[i] = player[AgainstPlayer].card[j] - (j - i);
 			printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
 		}
+		//ここからアタック対象指定、2択は後回し
 		for (i = 0; i < cardNum; i++) {
-			if (player[AgainstPlayer].clearCard[selectNum[i]] == COVERED) {
+			if ((player[AgainstPlayer].clearCard[selectNum[i]] == COVERED) && (player[turnPlayer].serialNum[i] < SERIAL_NUM)) {
 				getNum = selectNum[i];
+				player[turnPlayer].serialNum[i]++;
 				break;
 			}
 		}
@@ -248,33 +256,54 @@ void GetSideAIHand() {
 			while (player[turnPlayer].outsideCard[j] != -1) {
 				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
 					rangeNum[i]--;
+				else if ((player[turnPlayer].tellCard[i][j] >= minNum[i]) && (player[turnPlayer].tellCard[i][j] <= maxNum[i]))
+					rangeNum[i]--;
+				else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
+					rangeNum[i]--;
+					bruffNum = j;
+				}
 				j++;
 			}
-			if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
+			if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
+				printf("bruffed\n");
+				bruffed = true;
+				getNum = i;
+				ansNum = player[turnPlayer].toldCard[bruffNum];
+				break;
+			}
+			else if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
 				getNum = i;
 				break;
 			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
-		legalSelect = false;
-		do {
-			ansNum = GetRandomNum(minNum[getNum], maxNum[getNum]);
-			if ((ansNum >= 0) && (ansNum <= 23)) {
-				if (JudgeColor(ansNum) == JudgeColor(player[AgainstPlayer].card[getNum])) {
-					for (i = 0; i < DECKCARD; i++) {
-						if (ansNum == player[turnPlayer].outsideCard[i]) {
-							legalSelect = false;
-							break;
-						}
-						else if (player[turnPlayer].outsideCard[i] == -1) {
-							legalSelect = true;
-							break;
+		if (!bruffed) {
+			legalSelect = false;
+			do {
+				ansNum = GetRandomNum(minNum[getNum], maxNum[getNum]);
+				if ((ansNum >= 0) && (ansNum <= 23)) {
+					if (JudgeColor(ansNum) == JudgeColor(player[AgainstPlayer].card[getNum])) {
+						for (i = 0; i < DECKCARD; i++) {
+							for (j = 0; j < MAX_CARD; j++) {
+								if ((player[turnPlayer].outsideCard[i] == -1) && (player[turnPlayer].toldCard[i] == -1) && (player[turnPlayer].tellCard[j][i] == -1)) {
+									legalSelect = true;
+									break;
+								}
+							}
 						}
 					}
 				}
+			} while (!legalSelect);
+		}
+		i = 0;
+		while (i < DECKCARD) {
+			if (player[turnPlayer].tellCard[getNum][i] == -1) {
+				player[turnPlayer].tellCard[getNum][i] = ansNum;
+				break;
 			}
-		} while (!legalSelect);
-		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
+			i++;
+		}
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM] - 1] = ansNum;
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {

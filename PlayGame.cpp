@@ -17,7 +17,7 @@ extern int AgainstPlayer;
 　再戦時に毎回呼び出すのでいっそ別関数でいいんじゃねと思った
 */
 void InitGame() {
-	int i, j;
+	int i, j, k;
 	gameSet = false;
 	turnNum = 0;
 	for (i = 0; i < PLAYER_NUM; i++) {
@@ -25,6 +25,11 @@ void InitGame() {
 		for (j = 0; j < MAX_CARD; j++) {
 			player[i].card[j] = -1;
 			player[i].clearCard[j] = COVERED;
+			player[i].toldCard[j] = -1;
+			player[i].serialNum[j] = 0;
+			for (k = 0; k < DECKCARD; k++) {
+				player[i].tellCard[j][k] = -1;
+			}
 		}
 		for (j = 0; j < DECKCARD; j++) {
 			player[i].outsideCard[j] = -1;
@@ -266,7 +271,7 @@ void GetHumanHand() {
 		else {
 			ansNum = ansNum * 2 + 1;
 		}
-		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM] - 1] = ansNum;
 		legalSelect = false;
 		if (Hitting) {				//正解だった場合連続してアタックを行えるのでその処理を挟む必要あり
 			printf("正解です\n");
