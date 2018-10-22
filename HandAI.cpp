@@ -56,8 +56,8 @@ void GetRandomAIHand() {
 			printf("AI‚Í%d‚ğéŒ¾‚µA³‰ğ‚µ‚Ü‚µ‚½\n", ansNum);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
 			player[turnPlayer].attacks[SUCCESS_NUM]++;
-			if ((CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
-				attackContinue = true;
+			//if ((CheckClear(AgainstPlayer) < player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
+			//	attackContinue = true;
 		}
 		else {
 			printf("AI‚Í%d‚ğéŒ¾‚µA•s³‰ğ‚Å‚µ‚½\n", ansNum);
@@ -156,6 +156,7 @@ void GetBaseAIHand() {
 				}
 			}
 		} while (!legalSelect);
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
@@ -274,6 +275,12 @@ void GetSideAIHand() {
 				}
 			}
 		} while (!legalSelect);
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
+		i = 0;
+		while (player[AgainstPlayer].toldCard[i] != -1) {
+			printf("%d:%d\n", i, player[AgainstPlayer].toldCard[i]);
+		}
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {

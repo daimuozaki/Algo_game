@@ -25,6 +25,7 @@ void InitGame() {
 		for (j = 0; j < MAX_CARD; j++) {
 			player[i].card[j] = -1;
 			player[i].clearCard[j] = COVERED;
+			player[i].toldCard[j] = -1;
 		}
 		for (j = 0; j < DECKCARD; j++) {
 			player[i].outsideCard[j] = -1;
@@ -259,6 +260,9 @@ void GetHumanHand() {
 			}
 			else printf("もう一度やり直してください\n");
 		} while (!legalSelect);
+		if (JudgeColor(player[AgainstPlayer].card[getNum]) == BLACK) ansNum *= 2;
+		else ansNum = ansNum * 2 + 1;
+		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
 		legalSelect = false;
 		if (Hitting) {				//正解だった場合連続してアタックを行えるのでその処理を挟む必要あり
 			printf("正解です\n");
