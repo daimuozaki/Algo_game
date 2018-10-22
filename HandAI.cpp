@@ -276,11 +276,14 @@ void GetSideAIHand() {
 			}
 		} while (!legalSelect);
 		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
+<<<<<<< HEAD
 		i = 0;
 		while (player[AgainstPlayer].toldCard[i] != -1) {
 			printf("%d:%d\n", i, player[AgainstPlayer].toldCard[i]);
 		}
 		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM]] = ansNum;
+=======
+>>>>>>> 2eac4f3b7594f3518b96819427fde9d2c3129918
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
