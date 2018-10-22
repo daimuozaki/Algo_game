@@ -187,7 +187,7 @@ void GetSideAIHand() {
 	int *maxNum = new int[cardNum];
 	int *rangeNum = new int[cardNum];
 	int *selectNum = new int[cardNum];
-	int bruffNum = -1;
+	int bruffNum;
 	int i, j;
 	bool legalSelect = false;
 	bool hitting = false;
@@ -195,6 +195,7 @@ void GetSideAIHand() {
 	bool bruffed = false;
 	do {
 		attackContinue = false;			//連続アタック判定のリセット
+		bruffNum = -1;
 		player[turnPlayer].attacks[ATTACK_NUM]++;
 		for (i = 0; i < cardNum; i++) {	//範囲判定のリセット、連続アタック時に上下限の判定に影響が及ぶ可能性があるためここに配置
 			minNum[i] = 24;
@@ -256,15 +257,13 @@ void GetSideAIHand() {
 			while (player[turnPlayer].outsideCard[j] != -1) {
 				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
 					rangeNum[i]--;
-				else if ((player[turnPlayer].tellCard[i][j] >= minNum[i]) && (player[turnPlayer].tellCard[i][j] <= maxNum[i]))
-					rangeNum[i]--;
 				else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
 					rangeNum[i]--;
 					bruffNum = j;
 				}
 				j++;
 			}
-			if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
+			if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
 				printf("bruffed\n");
 				bruffed = true;
 				getNum = i;
@@ -285,7 +284,11 @@ void GetSideAIHand() {
 					if (JudgeColor(ansNum) == JudgeColor(player[AgainstPlayer].card[getNum])) {
 						for (i = 0; i < DECKCARD; i++) {
 							for (j = 0; j < MAX_CARD; j++) {
-								if ((player[turnPlayer].outsideCard[i] == -1) && (player[turnPlayer].toldCard[i] == -1) && (player[turnPlayer].tellCard[j][i] == -1)) {
+								if ((player[turnPlayer].outsideCard[i] == ansNum) || (player[turnPlayer].tellCard[j][i] == ansNum)) {
+									legalSelect = false;
+									break;
+								}
+								else if ((player[turnPlayer].outsideCard[i] == -1) && (player[turnPlayer].tellCard[j][i] == -1)) {
 									legalSelect = true;
 									break;
 								}

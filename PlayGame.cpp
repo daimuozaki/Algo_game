@@ -128,9 +128,9 @@ int DrawCard() {
 		player[turnPlayer].cardNum++;
 		deckTop++;
 		if (player[turnPlayer].playerKind == HUMAN) {
-			if (JudgeColor(drawCard) == BLACK) 
+			if (JudgeColor(drawCard) == BLACK)
 				printf("黒の%d番を引きました\n", GetCardNum(drawCard));
-			else 
+			else
 				printf("白の%d番を引きました\n", GetCardNum(drawCard));
 		}
 	}
@@ -145,18 +145,25 @@ int DrawCard() {
 　仮引数で受け取った数値から引いてきたカードが何枚目に入ったかを割り出すのもここで行う
 */
 void SoatCard(int dc) {
-	int i, j, k;
+	int i, j, k, l;
 	int numbox, clearbox;
+	int tellbox[DECKCARD];
 	for (i = 0; i < PLAYER_NUM; i++) {
 		for (j = 0; j < player[i].cardNum - 1; j++) {
 			for (k = player[i].cardNum - 1; k > j; k--) {
 				if (player[i].card[k - 1] > player[i].card[k]) {
 					numbox = player[i].card[k - 1];
 					clearbox = player[i].clearCard[k - 1];
+					for (l = 0; l < DECKCARD; l++) {
+						tellbox[l] = player[i].tellCard[k - 1][l];
+						player[i].tellCard[k - 1][l] = player[i].tellCard[k][l];
+						player[i].tellCard[k][l] = tellbox[l];
+					}
 					player[i].card[k - 1] = player[i].card[k];
 					player[i].clearCard[k - 1] = player[i].clearCard[k];
 					player[i].card[k] = numbox;
 					player[i].clearCard[k] = clearbox;
+
 				}
 			}
 		}
