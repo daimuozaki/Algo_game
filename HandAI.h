@@ -15,6 +15,7 @@
 #define RAND_AI 2
 #define BASE_AI 3
 #define SIDE_AI 4
+#define CENTER_AI 5
 //プレイヤー総数、とりあえず2人で
 #define PLAYER_NUM 2
 //カード状況
@@ -61,6 +62,7 @@ int JudgeColor(int);
 bool JudgeNum(int, int);
 int GetCardNum(int);
 int CheckClear(int);
+void AddOutsideCard(int, int);
 int GetRandomNum(int, int);
 void LnTrim(char *);
 

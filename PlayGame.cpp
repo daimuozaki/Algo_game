@@ -103,16 +103,9 @@ int PlayGame() {
 void StartGame() {
 	int i;
 	for (i = 0; i < 8; i++) {
-		if (i % 2 == 0) {
-			player[0].card[i / 2] = deck[deckTop];
-			player[0].outsideCard[i / 2] = deck[deckTop];
-			player[0].cardNum++;
-		}
-		else {
-			player[1].card[i / 2] = deck[deckTop];
-			player[1].outsideCard[i / 2] = deck[deckTop];
-			player[1].cardNum++;
-		}
+		player[i % 2].card[i / 2] = deck[deckTop];
+		player[i % 2].outsideCard[i / 2] = deck[deckTop];
+		player[i % 2].cardNum++;
 		deckTop++;
 	}
 }
@@ -122,6 +115,7 @@ void StartGame() {
 int DrawCard() {
 	int num = player[turnPlayer].cardNum;
 	int drawCard;
+	int i;
 	if (deckTop < DECKCARD) {
 		player[turnPlayer].card[num] = deck[deckTop];
 		drawCard = deck[deckTop];
@@ -133,6 +127,7 @@ int DrawCard() {
 			else
 				printf("白の%d番を引きました\n", GetCardNum(drawCard));
 		}
+		AddOutsideCard(drawCard, turnPlayer);
 	}
 	else {
 		printf("山札がないため、カードを引けませんでした\n");
@@ -146,7 +141,7 @@ int DrawCard() {
 */
 void SoatCard(int dc) {
 	int i, j, k, l;
-	int numbox, clearbox;
+	int numbox, clearbox, serialbox;
 	int tellbox[DECKCARD];
 	for (i = 0; i < PLAYER_NUM; i++) {
 		for (j = 0; j < player[i].cardNum - 1; j++) {
@@ -154,6 +149,7 @@ void SoatCard(int dc) {
 				if (player[i].card[k - 1] > player[i].card[k]) {
 					numbox = player[i].card[k - 1];
 					clearbox = player[i].clearCard[k - 1];
+					serialbox = player[i].serialNum[k - 1];
 					for (l = 0; l < DECKCARD; l++) {
 						tellbox[l] = player[i].tellCard[k - 1][l];
 						player[i].tellCard[k - 1][l] = player[i].tellCard[k][l];
@@ -161,9 +157,10 @@ void SoatCard(int dc) {
 					}
 					player[i].card[k - 1] = player[i].card[k];
 					player[i].clearCard[k - 1] = player[i].clearCard[k];
+					player[i].serialNum[k - 1] = player[i].serialNum[k];
 					player[i].card[k] = numbox;
 					player[i].clearCard[k] = clearbox;
-
+					player[i].serialNum[k] = serialbox;
 				}
 			}
 		}
@@ -171,6 +168,12 @@ void SoatCard(int dc) {
 	for (i = 0; i < player[turnPlayer].cardNum; i++) {
 		if (dc == player[turnPlayer].card[i])
 			player[turnPlayer].getCard = i;
+		else if (dc == -1) {
+			if (player[turnPlayer].clearCard[i] == COVERED) {
+				player[turnPlayer].getCard = i;
+				break;
+			}
+		}
 	}
 }
 /*ゲーム中のメニュー表示
@@ -217,7 +220,9 @@ void Attack() {
 	case SIDE_AI:
 		GetSideAIHand();
 		break;
-
+	case CENTER_AI:
+		GetCenterAIHand();
+		break;
 	default:
 		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);	//これを吐いたら初期化が上手くいっていない事になる
 		break;
