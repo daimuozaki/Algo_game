@@ -209,6 +209,9 @@ void GameMenu() {
 　プレイヤーとAIで処理が分かれるためこのような形になった
 */
 void Attack() {
+	if (games >= 3) {
+		printf("%dゲーム目\n", games);
+	}
 	switch (player[turnPlayer].playerKind) {
 	case HUMAN:
 		GetHumanHand();

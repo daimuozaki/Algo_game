@@ -298,7 +298,14 @@ void GetSideAIHand() {
 			}
 			i++;
 		}
-		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM] - 1] = ansNum;
+		i = 0;
+		while (i < DECKCARD) {
+			if (player[AgainstPlayer].toldCard[i] == -1) {
+				player[AgainstPlayer].toldCard[i] = ansNum;
+				break;
+			}
+			i++;
+		}
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
@@ -435,7 +442,14 @@ void GetCenterAIHand() {
 			}
 			i++;
 		}
-		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM] - 1] = ansNum;
+		i = 0;
+		while (i < DECKCARD) {
+			if (player[AgainstPlayer].toldCard[i] == -1) {
+				player[AgainstPlayer].toldCard[i] = ansNum;
+				break;
+			}
+			i++;
+		}
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
@@ -589,7 +603,14 @@ void GetBruffAIHand() {
 			}
 			i++;
 		}
-		player[AgainstPlayer].toldCard[player[turnPlayer].attacks[ATTACK_NUM] - 1] = ansNum;
+		i = 0;
+		while (i < DECKCARD) {
+			if (player[AgainstPlayer].toldCard[i] == -1) {
+				player[AgainstPlayer].toldCard[i] = ansNum;
+				break;
+			}
+			i++;
+		}
 		ansNum = GetCardNum(ansNum);
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
