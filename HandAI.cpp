@@ -240,28 +240,30 @@ void GetSideAIHand() {
 			}
 		}
 		for (i = 0; i < cardNum; i++) {
-			rangeNum[i] = maxNum[i] - minNum[i];
-			j = 0;
-			while (player[turnPlayer].outsideCard[j] != -1) {
-				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
-					rangeNum[i]--;
-				else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
-					rangeNum[i]--;
-					bruffNum = j;
+			if (player[AgainstPlayer].clearCard[i] == COVERED) {
+				rangeNum[i] = maxNum[i] - minNum[i];
+				j = 0;
+				while (player[turnPlayer].outsideCard[j] != -1) {
+					if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
+						rangeNum[i]--;
+					else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
+						//rangeNum[i]--;
+						bruffNum = j;
+					}
+					j++;
 				}
-				j++;
-			}
-			/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
-				printf("bruffed\n");
-				bruffed = true;
-				getNum = i;
-				ansNum = player[turnPlayer].toldCard[bruffNum];
-			}
-			else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
-				getNum = i;
-			}
-			if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
-				break;
+				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+					printf("bruffed\n");
+					bruffed = true;
+					getNum = i;
+					ansNum = player[turnPlayer].toldCard[bruffNum];
+				}
+				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+					getNum = i;
+				}
+				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
+					break;
+				}
 			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
@@ -375,28 +377,30 @@ void GetCenterAIHand() {
 			}
 		}
 		for (i = 0; i < cardNum; i++) {
-			rangeNum[i] = maxNum[i] - minNum[i];
-			j = 0;
-			while (player[turnPlayer].outsideCard[j] != -1) {
-				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
-					rangeNum[i]--;
-				else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
-					rangeNum[i]--;
-					bruffNum = j;
+			if (player[AgainstPlayer].clearCard[i] == COVERED) {
+				rangeNum[i] = maxNum[i] - minNum[i];
+				j = 0;
+				while (player[turnPlayer].outsideCard[j] != -1) {
+					if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
+						rangeNum[i]--;
+					else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
+						//rangeNum[i]--;
+						bruffNum = j;
+					}
+					j++;
 				}
-				j++;
-			}
-			/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
-				printf("bruffed\n");
-				bruffed = true;
-				getNum = i;
-				ansNum = player[turnPlayer].toldCard[bruffNum];
-			}
-			else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
-				getNum = i;
-			}
-			if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
-				break;
+				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+					printf("bruffed\n");
+					bruffed = true;
+					getNum = i;
+					ansNum = player[turnPlayer].toldCard[bruffNum];
+				}
+				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+					getNum = i;
+				}
+				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
+					break;
+				}
 			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
@@ -527,28 +531,30 @@ void GetBruffAIHand() {
 			}
 		}
 		for (i = 0; i < cardNum; i++) {
-			rangeNum[i] = maxNum[i] - minNum[i];
-			j = 0;
-			while (player[turnPlayer].outsideCard[j] != -1) {
-				if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
-					rangeNum[i]--;
-				else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
-					rangeNum[i]--;
-					bruffNum = j;
+			if (player[AgainstPlayer].clearCard[i] == COVERED) {
+				rangeNum[i] = maxNum[i] - minNum[i];
+				j = 0;
+				while (player[turnPlayer].outsideCard[j] != -1) {
+					if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
+						rangeNum[i]--;
+					else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
+						//rangeNum[i]--;
+						bruffNum = j;
+					}
+					j++;
 				}
-				j++;
-			}
-			/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
-				printf("bruffed\n");
-				bruffed = true;
-				getNum = i;
-				ansNum = player[turnPlayer].toldCard[bruffNum];
-			}
-			else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0) && (player[AgainstPlayer].clearCard[i] == COVERED)) {
-				getNum = i;
-			}
-			if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
-				break;
+				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+					printf("bruffed\n");
+					bruffed = true;
+					getNum = i;
+					ansNum = player[turnPlayer].toldCard[bruffNum];
+				}
+				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+					getNum = i;
+				}
+				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
+					break;
+				}
 			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);

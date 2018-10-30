@@ -6,7 +6,7 @@ int deck[DECKCARD];
 int deckTop;
 
 int turnNum;
-
+int games;
 bool gameSet;
 FILE *file;
 
@@ -19,6 +19,7 @@ extern int AgainstPlayer;
 void InitGame() {
 	int i, j, k;
 	gameSet = false;
+	games++;
 	turnNum = 0;
 	for (i = 0; i < PLAYER_NUM; i++) {
 		player[i].cardNum = 0;
@@ -40,6 +41,7 @@ void InitGame() {
 	deckTop = 0;
 	InitDeck();
 	MakeFile();
+	fprintf(file, "ゲーム%d\n", games);
 }
 /*ファイル作成
 　日時で初期化できるようになりました
@@ -225,6 +227,7 @@ void Attack() {
 		break;
 	default:
 		printf("プレイヤー%dが設定されていません\n", turnPlayer + 1);	//これを吐いたら初期化が上手くいっていない事になる
+		system("pause");
 		break;
 	}
 }
@@ -328,9 +331,12 @@ void GetHumanHand() {
 　カード数以上で判定してるけど同値でもよかったかも
 */
 void CheckGameSet() {
-	printf("%d,%d\n", CheckClear(AgainstPlayer), player[AgainstPlayer].cardNum);
-	if (CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum)
-		gameSet = true;
+	int i;
+	for (i = 0; i < PLAYER_NUM;i++) {
+		printf("%d,%d\n", CheckClear(i), player[i].cardNum);
+		if (CheckClear(i) >= player[i].cardNum)
+			gameSet = true;
+	}
 }
 /*結果を確認して確定させる関数
 　負けたほうはすべての札が公開されている＝公開枚数が多いほうが負け
@@ -353,8 +359,8 @@ int CheckResult() {
 */
 void ChangePlayer() {
 	turnNum++;
-	turnPlayer = turnNum % PLAYER_NUM;
-	AgainstPlayer = (turnNum + 1) % PLAYER_NUM;
+	turnPlayer = turnNum % 2;
+	AgainstPlayer = (turnNum + 1) % 2;
 }
 /*ファイルへの書き込み
 　AIが参加している場合も考え別関数として記述

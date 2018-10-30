@@ -1,3 +1,1 @@
-﻿  HandAI.cpp
-c:\users\reijer\source\repos\algo_game\handai.cpp(344): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
-  Algo_game.vcxproj -> C:\Users\Reijer\source\repos\Algo_game\Debug\Algo_game.exe
+﻿  Algo_game.vcxproj -> C:\Users\Reijer\source\repos\Algo_game\Debug\Algo_game.exe
