@@ -247,21 +247,18 @@ void GetSideAIHand() {
 					if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
 						rangeNum[i]--;
 					else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
-						//rangeNum[i]--;
+						rangeNum[i]--;
 						bruffNum = j;
 					}
 					j++;
 				}
-				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+				if ((rangeNum[i] < 0) && (bruffNum != -1)) {
 					printf("bruffed\n");
-					bruffed = true;
 					getNum = i;
-					ansNum = player[turnPlayer].toldCard[bruffNum];
+					break;
 				}
-				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+				else if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
 					getNum = i;
-				}
-				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
 					break;
 				}
 			}
@@ -310,7 +307,7 @@ void GetSideAIHand() {
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
 			printf("AI‚Í%d‚ğéŒ¾‚µA³‰ğ‚µ‚Ü‚µ‚½\n", ansNum);
-			AddOutsideCard(ansNum, turnPlayer);
+			AddOutsideCard(player[AgainstPlayer].card[getNum], turnPlayer);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
 			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			//if ((CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
@@ -404,8 +401,6 @@ void GetCenterAIHand() {
 				}
 				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
 					getNum = i;
-				}
-				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
 					break;
 				}
 			}
@@ -454,7 +449,7 @@ void GetCenterAIHand() {
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
 			printf("AI‚Í%d‚ğéŒ¾‚µA³‰ğ‚µ‚Ü‚µ‚½\n", ansNum);
-			AddOutsideCard(ansNum, turnPlayer);
+			AddOutsideCard(player[AgainstPlayer].card[getNum], turnPlayer);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
 			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			//if ((CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
@@ -552,21 +547,19 @@ void GetBruffAIHand() {
 					if ((player[turnPlayer].outsideCard[j] >= minNum[i]) && (player[turnPlayer].outsideCard[j] <= maxNum[i]))
 						rangeNum[i]--;
 					else if ((player[turnPlayer].toldCard[j] >= minNum[i]) && (player[turnPlayer].toldCard[j] <= maxNum[i])) {
-						//rangeNum[i]--;
+						rangeNum[i]--;
 						bruffNum = j;
 					}
 					j++;
 				}
-				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+				if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
 					printf("bruffed\n");
 					bruffed = true;
 					getNum = i;
 					ansNum = player[turnPlayer].toldCard[bruffNum];
 				}
-				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+				else if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
 					getNum = i;
-				}
-				if (player[turnPlayer].serialNum[getNum] < SERIAL_NUM) {
 					break;
 				}
 			}
@@ -615,7 +608,7 @@ void GetBruffAIHand() {
 		hitting = JudgeNum(ansNum, getNum);
 		if (hitting) {
 			printf("AI‚Í%d‚ğéŒ¾‚µA³‰ğ‚µ‚Ü‚µ‚½\n", ansNum);
-			AddOutsideCard(ansNum, turnPlayer);
+			AddOutsideCard(player[AgainstPlayer].card[getNum], turnPlayer);
 			player[AgainstPlayer].clearCard[getNum] = CLEAR;
 			player[turnPlayer].attacks[SUCCESS_NUM]++;
 			//if ((CheckClear(AgainstPlayer) >= player[AgainstPlayer].cardNum) && (GetRandomNum(0, 1)))
