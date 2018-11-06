@@ -393,13 +393,12 @@ void GetCenterAIHand() {
 					}
 					j++;
 				}
-				/*if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+				if ((rangeNum[i] < 0) && (bruffNum != -1)) {
 					printf("bruffed\n");
-					bruffed = true;
 					getNum = i;
-					ansNum = player[turnPlayer].toldCard[bruffNum];
+					break;
 				}
-				else */if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
+				else if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
 					getNum = i;
 					break;
 				}
@@ -540,6 +539,7 @@ void GetBruffAIHand() {
 			}
 		}
 		for (i = 0; i < cardNum; i++) {
+			legalSelect = false;
 			if (player[AgainstPlayer].clearCard[i] == COVERED) {
 				rangeNum[i] = maxNum[i] - minNum[i];
 				j = 0;
@@ -552,16 +552,46 @@ void GetBruffAIHand() {
 					}
 					j++;
 				}
-				if ((rangeNum[i] < 0) && (player[AgainstPlayer].clearCard[i] == COVERED) && (bruffNum != -1)) {
+				if ((rangeNum[i] < 0) && (bruffNum != -1)) {
 					printf("bruffed\n");
-					bruffed = true;
 					getNum = i;
-					ansNum = player[turnPlayer].toldCard[bruffNum];
+					break;
 				}
 				else if ((rangeNum[i] <= 3) && (rangeNum[i] >= 0)) {
 					getNum = i;
 					break;
 				}
+				j = 0;
+				while (player[turnPlayer].outsideCard[j] != -1) {
+					if ((minNum[i] == player[turnPlayer].outsideCard[j]) && (JudgeColor(player[AgainstPlayer].card[i]) == JudgeColor(player[turnPlayer].outsideCard[j]))) {
+						if ((minNum[i] <= 1) && (player[turnPlayer].card[player[turnPlayer].getCard] != minNum[i])) {
+							if (player[turnPlayer].serialNum[i] < SERIAL_NUM) {
+								bruffed = true;
+								getNum = i;
+								ansNum = minNum[i];
+								legalSelect = true;
+								player[turnPlayer].bruffs[ATTACK_NUM]++;
+								break;
+							}
+						}
+					}
+					else if ((maxNum[i] == player[turnPlayer].outsideCard[j]) && (JudgeColor(player[AgainstPlayer].card[i]) == JudgeColor(player[turnPlayer].outsideCard[j]))) {
+						if ((maxNum[i] >= 22) && (player[turnPlayer].card[player[turnPlayer].getCard] != minNum[i])) {
+							if (player[turnPlayer].serialNum[i] < SERIAL_NUM) {
+								bruffed = true;
+								getNum = i;
+								ansNum = maxNum[i];
+								legalSelect = true;
+								player[turnPlayer].bruffs[ATTACK_NUM]++;
+								break;
+							}
+						}
+					}
+					j++;
+				}
+			}
+			if (legalSelect) {
+				break;
 			}
 		}
 		printf("AIプレイヤー%dは%d番のカードを指定しました\n", turnPlayer + 1, getNum);
@@ -587,6 +617,9 @@ void GetBruffAIHand() {
 					}
 				}
 			} while (!legalSelect);
+		}
+		else {
+
 		}
 		i = 0;
 		while (i < DECKCARD) {

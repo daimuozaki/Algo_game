@@ -117,7 +117,6 @@ void StartGame() {
 int DrawCard() {
 	int num = player[turnPlayer].cardNum;
 	int drawCard;
-	int i;
 	if (deckTop < DECKCARD) {
 		player[turnPlayer].card[num] = deck[deckTop];
 		drawCard = deck[deckTop];
@@ -224,6 +223,9 @@ void Attack() {
 		break;
 	case CENTER_AI:
 		GetCenterAIHand();
+		break;
+	case BRUFF_AI:
+		GetBruffAIHand();
 		break;
 	default:
 		printf("ƒvƒŒƒCƒ„[%d‚ªÝ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ\n", turnPlayer + 1);	//‚±‚ê‚ð“f‚¢‚½‚ç‰Šú‰»‚ªãŽè‚­‚¢‚Á‚Ä‚¢‚È‚¢Ž–‚É‚È‚é

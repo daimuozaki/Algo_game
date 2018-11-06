@@ -16,6 +16,7 @@
 #define BASE_AI 3
 #define SIDE_AI 4
 #define CENTER_AI 5
+#define BRUFF_AI 6
 //プレイヤー総数、とりあえず2人で
 #define PLAYER_NUM 2
 //カード状況
@@ -49,6 +50,7 @@ typedef struct {
 	int cardNum;		//現在のカードの総枚数
 	int WinNum;			//連戦時の勝利回数
 	int attacks[2];		//アタックの確認用配列、0がアタック総数で1が成功数
+	int bruffs[2];		//ブラフの確認用配列
 	int serialNum[MAX_CARD];		//同一カードのアタック数、3以上でスルーさせるように
 	int tellCard[MAX_CARD][DECKCARD];	//自分が宣言したカード、カードごとに分けて投げ込む
 }Player;
