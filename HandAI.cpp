@@ -208,7 +208,7 @@ void GetSideAIHand() {
 			else {
 				selectNum[i] = cardNum - (i / 2 + 1);
 			}
-			printf("%d\n", selectNum[i]);
+			//printf("%d\n", selectNum[i]);
 		}
 		i = 0;
 		/*while (player[turnPlayer].toldCard[i] != -1) {
@@ -231,7 +231,7 @@ void GetSideAIHand() {
 				if (player[AgainstPlayer].clearCard[j] == CLEAR) minNum[i] = player[AgainstPlayer].card[j] - (j - i);
 			for (j = cardNum - 1; j > i; j--)
 				if (player[AgainstPlayer].clearCard[j] == CLEAR)maxNum[i] = player[AgainstPlayer].card[j] - (j - i);
-			printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
+			//printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
 		}
 		//ここからアタック対象指定、2択は後回し
 		for (i = 0; i < cardNum; i++) {
@@ -362,7 +362,7 @@ void GetCenterAIHand() {
 			maxNum[i] = -1;
 			rangeNum[i] = 0;
 			selectNum[i] = cardNum / 2 + i / 2.0 - i * (i % 2);
-			printf("%d\n", selectNum[i]);
+			//printf("%d\n", selectNum[i]);
 		}
 		i = 0;
 		//while (player[turnPlayer].toldCard[i] != -1) {
@@ -385,7 +385,7 @@ void GetCenterAIHand() {
 				if (player[AgainstPlayer].clearCard[j] == CLEAR) minNum[i] = player[AgainstPlayer].card[j] - (j - i);
 			for (j = cardNum - 1; j > i; j--)
 				if (player[AgainstPlayer].clearCard[j] == CLEAR)maxNum[i] = player[AgainstPlayer].card[j] - (j - i);
-			printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
+			//printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
 		}
 		//ここからアタック対象指定、2択は後回し
 		for (i = 0; i < cardNum; i++) {
@@ -521,10 +521,10 @@ void GetBruffAIHand() {
 			}
 		}
 		i = 0;
-		while (player[turnPlayer].toldCard[i] != -1) {
+		/*while (player[turnPlayer].toldCard[i] != -1) {
 			printf("%d\n", player[turnPlayer].toldCard[i]);
 			i++;
-		}
+		}*/
 		//while (true) {
 		//	if ((player[turnPlayer].outsideCard[i] == -1)||(i>DECKCARD))
 		//		break;
@@ -541,7 +541,7 @@ void GetBruffAIHand() {
 				if (player[AgainstPlayer].clearCard[j] == CLEAR) minNum[i] = player[AgainstPlayer].card[j] - (j - i);
 			for (j = cardNum - 1; j > i; j--)
 				if (player[AgainstPlayer].clearCard[j] == CLEAR)maxNum[i] = player[AgainstPlayer].card[j] - (j - i);
-			printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
+			//printf("%d:%d～%d\n", i, minNum[i], maxNum[i]);
 		}
 		//ここからアタック対象指定、2択は後回し
 		for (i = 0; i < cardNum; i++) {
